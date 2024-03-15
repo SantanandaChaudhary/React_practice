@@ -1,32 +1,25 @@
-import React, { useState } from 'react'
-import ContactPage from './ContactPage';
+
+import { useApi } from '../hooks/useApi';
 
 const HomePage = () => {
-  const [data, setData ]= useState([])
+  // setTimeout(() => {
+    // console.log('Hello')
+  // }, 4000);
+  // console.log('world')
 
-  const addSome = (obj)=>{
-   setData([...data, obj])
-   }
-  
-   const remove = (index)=>{
-    data.splice(index,1)
-    setData([...data])
-   }
+  const [load, err, data] = useApi('https://dummyjson.com/products');
+
+
+  if (load){
+    return <h1> Loading ......</h1>
+  }
+  if (err){
+    return <h1> {`${err}`}</h1>
+  }
+  console.log(data)
 
   return (
-    <div >   
-      <ContactPage addSome={addSome} />
-      
-        {data.map((post , i)=>{
-          return <div key={i} className='m-5 p-2 shadow-2xl max-w-xs space-y-2 flex items-baseline justify-between'>
-            <div>
-              <h1> {post.title}</h1>
-              <p>{post.description}</p>
-            </div>
-            <button onClick={()=>remove(i)}><i className="fa-solid fa-trash"></i></button>
-            
-          </div>
-        })}
+    <div>
       
     </div>
   )
