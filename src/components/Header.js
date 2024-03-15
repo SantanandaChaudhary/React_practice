@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const Header = () => {
+  const nav = useNavigate();
   const [show, setShow] = useState(false);
   const navMenu = [
     {path: 'about', name : 'About'},
@@ -16,7 +17,7 @@ px-4 py-2  items-baseline'>
  
 
   <div className='flex flex-col space-y-2 '>
-    <h1 className='text-4xl font-bold' > Demo</h1>
+    <h1  onClick={()=>nav('/')} className='text-4xl font-bold cursor-pointer' > Santu</h1>
      {show && <div className=' sm:flex  hidden flex-col'>  {navMenu.map((nav, i)=>{
 return <NavLink key={i} to={nav.path} 
 className={(n)=>{
