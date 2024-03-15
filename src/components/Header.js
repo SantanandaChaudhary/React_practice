@@ -21,7 +21,7 @@ px-4 py-2  items-baseline'>
 return <NavLink key={i} to={nav.path} 
 className={(n)=>{
   const {isActive} = n;
-  return isActive ? 'text-pink-400':'text-white'
+  return isActive ? ' text-pink-400 ':'text-white'
 }}>
   {nav.name}
 </NavLink>
