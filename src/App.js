@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 import RootLayout from './components/RootLayout';
-import HomePage from './pages/HomePage';
+import AddForm from './components/AddForm';
 
 
 
@@ -12,7 +12,7 @@ const App = () => {
     <>
       <Routes>
         <Route path='/' element={<RootLayout />}>
-          <Route index  element={<HomePage />} />
+          <Route index  element={<AddForm />} />
            <Route path='about' element={<About />} />
            <Route path='*' element={<NotFound />} />
         </Route>
