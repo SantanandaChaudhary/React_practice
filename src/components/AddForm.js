@@ -14,9 +14,16 @@ import {
 
 } from "@material-tailwind/react";
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { addBlogs } from '../features/blogSlice';
+import { nanoid } from '@reduxjs/toolkit';
 
 
 const AddForm = () => {
+   const dispatch = useDispatch();
+   const nav = useNavigate();
+
   const valSchema = Yup.object({
     title:Yup.string().required(),
     detail: Yup.string().required(),
@@ -25,6 +32,7 @@ const AddForm = () => {
     place: Yup.string().required(),
     times: Yup.array().min(1).required(),
     topics:Yup.string().required(),
+    date:Yup.date().required(),
 
     imageFile :Yup.mixed().test('fileType', 'Invalid file type', (value)=>{
       return value && ['image/jpeg', 'image/png','image/jpg'].includes(value.type);
@@ -42,10 +50,24 @@ const AddForm = () => {
       times: [],
       topics:'',
       imageFile:null,
-      imageUrl:''
+      imageUrl:'',
+      date:''
     },
     onSubmit: (values) => {
-      console.log(values); // or you can perform form submission here
+      const newData = {
+        title: values.title,
+        detail: values.detail,
+        email:values.email,
+        place: values.place,
+        times: values.times,
+        topics:values.topics,
+        imageUrl:values.imageUrl,
+        date:values.date,
+        id:nanoid()
+
+      }
+      dispatch(addBlogs(newData));
+      nav(-1)
     },
     validationSchema:valSchema
 
@@ -73,6 +95,7 @@ const AddForm = () => {
           <Typography className='text-3xl font-bold'> SignUp</Typography>
           <Typography className='mb-1'> Nice to meet You !!! Enter your details to register.</Typography>
           <div className=" flex flex-col gap-6">
+            
             <Input
               size="lg"
               label='Title'
@@ -101,6 +124,19 @@ const AddForm = () => {
               onChange={formik.handleChange}
             />
             {formik.errors.email && formik.touched.email && <h1 className='text-pink-700'>{formik.errors.email}</h1>}
+
+            <Input 
+             label='Select date'
+             type='date'
+             name='date'
+             value={formik.values.darte}
+             onChange={formik.handleChange}
+              />
+              {formik.errors.date && formik.touched.date && <h1 className='text-pink-700'>{formik.errors.date}</h1>}
+
+            <Input
+             label ='Time'
+             type='datetime-local'/>
 
            <div>
             <Typography variant='h5' color='brown'>Pick the Place</Typography>
